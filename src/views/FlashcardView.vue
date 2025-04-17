@@ -1,15 +1,20 @@
 <template>
-  <div class="flex flex-col justify-center items-center mt-10">
+  <div v-if="finished" class="grid">
+    <EndOfQaBox />
+  </div>
+
+  <div v-else class="flex flex-col justify-center items-center mt-10">
     <ProgressBar :currentIndex="currentIndex" :filteredQA="filteredQA" />
     <Flashcard :card="currentCard" :flipped="flipped" @toggle="flipped = !flipped" />
     <div class="flex gap-2 mt-5">
-      <Button :disabled="currentIndex <= 0" @click="previousCard">Previous</Button>
-      <Button :disabled="currentIndex >= filteredQA.length - 1" @click="nextCard">Next</Button>
+      <Button @click="unknownAnswer">Unknown</Button>
+      <Button @click="knownAnswer"> Known </Button>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import Button from '@/components/Button.vue'
+import EndOfQaBox from '@/components/EndOfQaBox.vue'
 import Flashcard from '@/components/Flashcard.vue'
 import ProgressBar from '@/components/ProgressBar.vue'
 import { useFlashcardStore } from '@/stores/flashcardStore'
@@ -23,19 +28,24 @@ const filteredQA = computed(() => store.flashcardSubjects(path.value))
 const currentIndex = ref(0)
 const currentCard = computed(() => filteredQA.value[currentIndex.value])
 const flipped = ref(false)
+const finished = ref(false)
 
-function nextCard() {
-  if (currentIndex.value < filteredQA.value.length - 1) {
+function knownAnswer() {
+  store.recordAnswers(currentCard.value.id, 'known')
+  if (currentIndex.value !== filteredQA.value.length - 1) {
     currentIndex.value++
-    flipped.value = false
-    console.log(currentIndex.value)
+  } else {
+    finished.value = true
   }
+  flipped.value = false
 }
-function previousCard() {
-  if (currentIndex.value > 0) {
-    currentIndex.value--
-    flipped.value = false
-    console.log(currentIndex.value)
+function unknownAnswer() {
+  store.recordAnswers(currentCard.value.id, 'unknown')
+  if (currentIndex.value !== filteredQA.value.length - 1) {
+    currentIndex.value++
+  } else {
+    finished.value = true
   }
+  flipped.value = false
 }
 </script>

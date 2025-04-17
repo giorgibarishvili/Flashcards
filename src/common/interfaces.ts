@@ -4,3 +4,7 @@ export interface Flashcard {
   question: string
   answer: string
 }
+export interface Answer {
+  id: number
+  status: 'known' | 'unknown'
+}
