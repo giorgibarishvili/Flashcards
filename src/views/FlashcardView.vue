@@ -31,7 +31,9 @@ const flipped = ref(false)
 const finished = ref(false)
 
 function knownAnswer() {
+  //adding question status to store
   store.recordAnswers(currentCard.value.id, 'known')
+  // moving to next question until it reaches the last in array
   if (currentIndex.value !== filteredQA.value.length - 1) {
     currentIndex.value++
   } else {
@@ -40,7 +42,9 @@ function knownAnswer() {
   flipped.value = false
 }
 function unknownAnswer() {
+  //adding question status to store
   store.recordAnswers(currentCard.value.id, 'unknown')
+  // moving to next question until it reaches the last in array
   if (currentIndex.value !== filteredQA.value.length - 1) {
     currentIndex.value++
   } else {

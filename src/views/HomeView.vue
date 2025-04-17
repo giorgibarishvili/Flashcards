@@ -1,5 +1,5 @@
 <template>
-  <div class="m-5 flex flex-col gap-1">
+  <div class="m-5 flex flex-wrap gap-5">
     <RouterLink
       v-for="(subject, index) in store.uniqueSubjects"
       :key="index"

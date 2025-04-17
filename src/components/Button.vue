@@ -1,7 +1,12 @@
 <template>
   <button
-    :class="{ 'opacity-50 cursor-not-allowed hover:bg-blue-600': disabled }"
-    class="p-2 bg-blue-600 cursor-pointer min-w-20 rounded-2xl hover:bg-blue-400"
+    :disabled="disabled"
+    :class="[
+      'p-2 min-w-40 rounded-2xl transition-all duration-200 font-medium text-shadow-black text-shadow-sm text-white',
+      disabled
+        ? 'bg-blue-600 opacity-50 cursor-not-allowed'
+        : 'bg-blue-600 hover:bg-blue-400 cursor-pointer',
+    ]"
   >
     <slot></slot>
   </button>

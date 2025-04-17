@@ -1,12 +1,16 @@
 <template>
   <div>
-    <div class="border size-80 mt-16 mx-auto flex items-center justify-center">
-      Flashcards finished!<br />
-      Known: {{ answersCount.known }}, Unknown: {{ answersCount.unknown }}
+    <div
+      class="mt-16 mx-auto size-80 border border-blue-300 bg-blue-50 text-center text-blue-800 font-medium rounded-xl flex flex-col items-center justify-center shadow-md p-4"
+    >
+      <p class="text-lg mb-2">Flashcards finished!</p>
+      <p>Known: {{ answersCount.known }}, Unknown: {{ answersCount.unknown }}</p>
     </div>
-    <RouterLink to="/" @click="store.resetAnswers()">
-      <Button class="mx-auto flex mt-4">New flashcards</Button>
-    </RouterLink>
+    <div class="flex justify-center mt-4">
+      <RouterLink to="/" @click="store.resetAnswers()">
+        <Button>New flashcards</Button>
+      </RouterLink>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
