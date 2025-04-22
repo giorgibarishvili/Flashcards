@@ -18,13 +18,13 @@ import EndOfQaBox from '@/components/EndOfQaBox.vue'
 import Flashcard from '@/components/Flashcard.vue'
 import ProgressBar from '@/components/ProgressBar.vue'
 import { useFlashcardStore } from '@/stores/flashcardStore'
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const path = ref(router.currentRoute.value.path.split('/').pop() || '')
 const store = useFlashcardStore()
-const filteredQA = computed(() => store.flashcardSubjects(path.value))
+const filteredQA = computed(() => store.flashcardsBySubject(path.value))
 const currentIndex = ref(0)
 const currentCard = computed(() => filteredQA.value[currentIndex.value])
 const flipped = ref(false)
@@ -32,7 +32,7 @@ const finished = ref(false)
 
 function knownAnswer() {
   //adding question status to store
-  store.recordAnswers(currentCard.value.id, 'known')
+  store.recordAnswer(currentCard.value.id, 'known')
   // moving to next question until it reaches the last in array
   if (currentIndex.value !== filteredQA.value.length - 1) {
     currentIndex.value++
@@ -43,7 +43,7 @@ function knownAnswer() {
 }
 function unknownAnswer() {
   //adding question status to store
-  store.recordAnswers(currentCard.value.id, 'unknown')
+  store.recordAnswer(currentCard.value.id, 'unknown')
   // moving to next question until it reaches the last in array
   if (currentIndex.value !== filteredQA.value.length - 1) {
     currentIndex.value++
@@ -52,4 +52,7 @@ function unknownAnswer() {
   }
   flipped.value = false
 }
+onMounted(() => {
+  store.resetAnswers()
+})
 </script>

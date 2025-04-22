@@ -11,7 +11,7 @@ export const useFlashcardStore = defineStore('data', {
     loadData() {
       this.data = flashcards
     },
-    recordAnswers(id: number, status: 'known' | 'unknown') {
+    recordAnswer(id: number, status: 'known' | 'unknown') {
       this.answers.push({ id, status })
     },
     resetAnswers() {
@@ -24,7 +24,7 @@ export const useFlashcardStore = defineStore('data', {
         .map((item) => item.subject)
         .filter((subject, index, array) => array.indexOf(subject) === index)
     },
-    flashcardSubjects: (state) => {
+    flashcardsBySubject: (state) => {
       return function getSubject(item: string) {
         return state.data.filter((i) => i.subject.toLowerCase() === item.toLowerCase())
       }

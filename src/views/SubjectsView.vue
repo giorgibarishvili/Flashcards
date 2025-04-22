@@ -21,5 +21,5 @@ const router = useRouter()
 //split to get array of items from url that can be /item/item/... -> ['/', 'item'...] and then pop to get last item from that array [subject]
 const path = ref(router.currentRoute.value.path.split('/').pop() || '')
 const store = useFlashcardStore()
-const filteredQA = computed(() => store.flashcardSubjects(path.value))
+const filteredQA = computed(() => store.flashcardsBySubject(path.value))
 </script>
